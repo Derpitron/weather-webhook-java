@@ -1,19 +1,17 @@
+package me.derpitron;
+
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.*;
 import java.util.Calendar;
 import java.util.Date;
-import java.lang.Throwable.*;
 import java.util.TimeZone;
 import static java.lang.Thread.sleep;
 import java.net.HttpURLConnection;
 
-import de.raik.webhook.WebhookBuilder;
+import de.raik.webhook.*;
 import io.github.cdimascio.dotenv.*;
 import com.google.gson.*;
-import de.raik.webhook.*;
-
-
 
 public class Webhook {
     public static void main(String[] args) {
@@ -28,17 +26,11 @@ public class Webhook {
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        if (!debugBuilder.isBuildable()) {
-            return;
-        }
         de.raik.webhook.Webhook debug = debugBuilder.build();
 
         WebhookBuilder mainBuilder = new WebhookBuilder(dotenv.get("HOOK"))
                 .content("THE CLOUD HAS ARIVED\nJJJJJJJJJJJJJJJJ");
-        if (!debugBuilder.isBuildable()) {
-            return;
-        }
-        de.raik.webhook.Webhook main = debugBuilder.build();
+        de.raik.webhook.Webhook main = mainBuilder.build();
 
         URL url = null;
         try {
@@ -50,7 +42,6 @@ public class Webhook {
             boolean x = false;
             debug.execute();
             while (true) {
-                WebhookBuilder hookBuild = new WebhookBuilder(dotenv.get("HOOK"));
 
                 URLConnection request = url.openConnection();
                 request.connect();
@@ -62,10 +53,10 @@ public class Webhook {
                 if (response.has("rain")) {
                     boolean isRaining = response.has("rain");
                     if (x == false) {
-                        boolean isRaining2 = false;
+                        boolean isRainingTest = false;
                     }
-                    boolean isRaining2 = isRaining;
-                    if ((isRaining) && (isRaining != isRaining2)) {
+                    boolean isRainingTest = isRaining;
+                    if ((isRaining) && (isRaining != isRainingTest)) {
                         HttpURLConnection outputConnection = main.execute();
                     }
                     x = true;
@@ -74,11 +65,9 @@ public class Webhook {
             }
         } catch (Exception e) {
             try {
-                debugBuilder.content("Program failed on " + InetAddress.getLocalHost() + " at " + localTime + "\nerror:\n```" + debug.execute(Throwable.printStackTrace(e)) + "```");
-                if (!debugBuilder.isBuildable()) {
-                    return;
-                }
-                //HttpURLConnection outputConnection = debug.execute();
+                e.printStackTrace();
+                debugBuilder.content("Program failed on " + InetAddress.getLocalHost() + " at " + localTime);
+                HttpURLConnection outputConnection = debug.execute();
             } catch (UnknownHostException unknownHostException) {
                 unknownHostException.printStackTrace();
             }
