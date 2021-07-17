@@ -6,6 +6,7 @@ import java.util.Date;
 import java.lang.Throwable.*;
 import java.util.TimeZone;
 import static java.lang.Thread.sleep;
+import java.net.HttpURLConnection;
 
 import de.raik.webhook.WebhookBuilder;
 import io.github.cdimascio.dotenv.*;
@@ -17,13 +18,27 @@ import de.raik.webhook.*;
 public class Webhook {
     public static void main(String[] args) {
         Dotenv dotenv = Dotenv.load();
-        String debugStatement = null;
-        WebhookBuilder debugContent = new WebhookBuilder(dotenv.get("DEBUG", debugStatement));
-        Webhook debug = new Webhook();
         Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone(dotenv.get("TIMEZONE")));
         Date localTime = calendar.getTime();
 
-        String hookStatement = ("THE CLOUD HAS ARIVED\nJJJJJJJJJJJJJJJJ");
+        WebhookBuilder debugBuilder = null;
+        try {
+            debugBuilder = new WebhookBuilder(dotenv.get("DEBUG"))
+                .content("Program started successfully on " + InetAddress.getLocalHost() + " at " + dotenv.get("TIMEZONE") + " - " + localTime + " with an interval of " + dotenv.get("INTERVAL") + " milliseconds");
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        if (!debugBuilder.isBuildable()) {
+            return;
+        }
+        de.raik.webhook.Webhook debug = debugBuilder.build();
+
+        WebhookBuilder mainBuilder = new WebhookBuilder(dotenv.get("HOOK"))
+                .content("THE CLOUD HAS ARIVED\nJJJJJJJJJJJJJJJJ");
+        if (!debugBuilder.isBuildable()) {
+            return;
+        }
+        de.raik.webhook.Webhook main = debugBuilder.build();
 
         URL url = null;
         try {
@@ -32,11 +47,7 @@ public class Webhook {
             e.printStackTrace();
         }
         try {
-            WebhookBuilder hookContent = new WebhookBuilder;
-            hookContent(dotenv.get("HOOK"));
-            Webhook hook = new Webhook(hookContent.build());
             boolean x = false;
-            debugStatement = ("Program started successfully on " + InetAddress.getLocalHost() + " at " + localTime);
             debug.execute();
             while (true) {
                 WebhookBuilder hookBuild = new WebhookBuilder(dotenv.get("HOOK"));
@@ -55,7 +66,7 @@ public class Webhook {
                     }
                     boolean isRaining2 = isRaining;
                     if ((isRaining) && (isRaining != isRaining2)) {
-                        hook.execute();
+                        HttpURLConnection outputConnection = main.execute();
                     }
                     x = true;
                 }
@@ -63,7 +74,11 @@ public class Webhook {
             }
         } catch (Exception e) {
             try {
-                debugStatement = ("Program failed on " + InetAddress.getLocalHost() + " at " + localTime + "\nerror:\n```" + debug.execute(Throwable.printStackTrace(e)) + "```");
+                debugBuilder.content("Program failed on " + InetAddress.getLocalHost() + " at " + localTime + "\nerror:\n```" + debug.execute(Throwable.printStackTrace(e)) + "```");
+                if (!debugBuilder.isBuildable()) {
+                    return;
+                }
+                //HttpURLConnection outputConnection = debug.execute();
             } catch (UnknownHostException unknownHostException) {
                 unknownHostException.printStackTrace();
             }
