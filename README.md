@@ -16,4 +16,4 @@ If you want to change the interval of the program just change the interval in .e
 # How to use it?
 Compile the .java file into a .jar or class file once you've made the necessary changes.  You can run this both locally or on a service like Heroku, but make sure that whatever service you use won't rate limit you and you have enough hours in it to keep it running for as long as you like. Heroku gives free users 450 hours per month, but check with the service you're using!
 
-Star this repo, and follow me and Vishard-006 for more cool projects like these!
+Star this repo, and follow me and Vishard-006 for more cool projects like these
