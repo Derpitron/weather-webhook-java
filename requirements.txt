@@ -1,0 +1,4 @@
+dhooks
+requests
+python-dotenv
+pytz
