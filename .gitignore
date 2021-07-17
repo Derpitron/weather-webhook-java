@@ -14,3 +14,4 @@ src\main\resources\.env
 \target
 \out
 src/main/resources/.env
+*.MF
