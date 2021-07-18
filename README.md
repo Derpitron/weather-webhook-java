@@ -8,17 +8,7 @@ This program allows you to change the interval of the program, change variables,
 Make sure that Maven is installed and it is in your PATH. This is necessary as the project uses Maven, as well as in order to run the compilation and packaging commands.
 
 # Installation
-Clone the repository, modify the placeholder values in `.env`. Then, run
-```
-mvn compile
-```
-in the root of the project directory. This will generate a `.class` file, located in `target/classes/me/derpitron`. From there, you can run the class file however you want. 
-
-If you want to package it into a `.jar` format, run
-```
-mvn package
-```
-in the root of the project directory. This will generate a `.jar` file, located in `target`. From there, you may run the file however you want.
+to be done
 
 # Variables
 In .env change the placeholders to: your main Discord webhook link, OpenWeatherMap api link (note: this program was built with the OpenWeatherMap Current Weather API in mind so dont use any other API. also use latitude and longitude of your location), debug webhook link to send start and error messages to, and your timezone in Time Zone Database format.
