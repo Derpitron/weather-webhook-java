@@ -22,7 +22,7 @@ public class Webhook {
         WebhookBuilder debugBuilder = null;
         try {
             debugBuilder = new WebhookBuilder(dotenv.get("DEBUG"))
-                .content("Program started successfully on " + InetAddress.getLocalHost() + " at " + dotenv.get("TIMEZONE") + " - " + localTime + " with an interval of " + dotenv.get("INTERVAL") + " milliseconds");
+                .content("Program started successfully on " + InetAddress.getLocalHost() + " with Process ID: `" + ProcessHandle.current().pid() + "` at " + dotenv.get("TIMEZONE") + " - " + localTime + " with an interval of " + dotenv.get("INTERVAL") + " milliseconds");
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
