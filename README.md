@@ -5,7 +5,11 @@ This is a program which pulls current weather from OpenWeatherMap and if it is r
 This program allows you to change the interval of the program, change variables, and it sends a start message with the name of the host and local time, as well as any caught exceptions to a debug webhook you specify. It also has a feature where it does not send the message until and unless the weather changes from not-raining to raining. (this part took me much longer than i'd like to figure out.)
 
 # Installation
-to-be-done
+Clone the repository, modify the placeholder values in `.env`. Then, run
+```
+mvn compile
+```
+in the root of the project directory. This will generate a `.class` file, located in `target/classes/me/derpitron`. From there, you can run the class file however you want. 
 
 # Variables
 In .env change the placeholders to: your main Discord webhook link, OpenWeatherMap api link (note: this program was built with the OpenWeatherMap Current Weather API in mind so dont use any other API. also use latitude and longitude of your location), debug webhook link to send start and error messages to, and your timezone in Time Zone Database format.
